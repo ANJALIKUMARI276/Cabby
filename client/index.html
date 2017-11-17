@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-Controller="MainController">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./public/js/angular.min.js"></script>
+  <script src="./public/js/angular-route.min.js"></script>
+  <script src="./public/js/angular-cookies.min.js"></script>
+  <script src="./public/js/ngStorage.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWGdlQ1x8H__AshOpz15pgp0_t7_boeUY&libraries=places"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.common-material.min.css" />
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.material.min.css" />
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.material.mobile.min.css" />
+  <script src="https://kendo.cdn.telerik.com/2017.2.504/js/jquery.min.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2017.2.504/js/kendo.all.min.js"></script>
+  <script src="./public/js/hr.timePicker.js"></script>
+  <script type="text/javascript" src="./public/js/wickedpicker.js"></script>
+  <script type="text/javascript" src="./public/js/timepicki.js"></script>
+  <script src="./public/js/datepicker.js"></script>
+  <script src="./public/js/bootstrap.js"></script>
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="./public/js/moment.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="./app.js"></script>
+  <script src="./controllers/MainController.js"></script>
+  <script src="./controllers/RegisterController.js"></script>
+  <script src="./controllers/HomeController.js"></script>
+  <script src="./controllers/AdminController.js"></script>
+  <script src="./controllers/BookingController.js"></script>
+  <script src="./controllers/LoginController.js"></script>
+  <script src="./controllers/BookController.js"></script>
+  <script src="./controllers/DriverController.js"></script>
+  <script src="./controllers/StartController.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./service/Authentication.js"></script>
+
+  <link rel="stylesheet" href="./public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="./public/css/custom.css">
+  <link rel="stylesheet" href="./public/css/style.css">
+  <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="./public/css/hr-timePicker.css">
+  <link rel="stylesheet" href="./public/css/wickedpicker.css">
+  <link rel="stylesheet" href="./public/css/timepicki.css">
+  <link rel="stylesheet" href="./public/css/datepicker.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+
+  <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#baby" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+           <a class="navbar-brand" href="#"><img src ="./public/Img/data/cab.jpg"/></a>
+        </div>
+        <div class="collapse navbar-collapse" id="baby">
+          <ul class="nav navbar-nav">
+<br>
+<br>
+
+
+
+
+              <li class="dropdown" ng-hide="isLoggedIn && nav.userType=='Admin'">
+                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrator<span class="caret"></span></a>
+                           <ul class="dropdown-menu">
+                             <li><a ng-hide="isLoggedIn && nav.userType=='Admin'" href="#/adddriver">Add Driver</a></li>
+                             <li><a ng-hide="isLoggedIn && nav.userType=='Admin'" href="#/addtarriff">Add Tarriff</a></li>
+                             <li class="divider"></li>
+                               <li><a href="#/Password" ng-hide="isLoggedIn && nav.userType=='Admin'" >Change Password</a></li>
+                               <li class="divider"></li>
+
+
+
+                                   <li>
+                                      		&nbsp;&nbsp;&nbsp;
+                                         <a href="#/login" ng-hide="isLoggedIn && nav.userType=='Admin'"  class="btn btn-danger">
+                                     &nbsp;&nbsp;&nbsp;&nbsp;
+
+                <span class="glyphicon glyphicon-blackboard"></span>
+                &nbsp;Logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+               </li>
+
+                           </ul>
+                         </li>
+
+
+
+                         <li class="dropdown"  ng-hide="isLoggedIn && nav.userType=='Driver'">
+                              <a class="dropdown-toggle"  data-toggle="dropdown" href="#/driver">
+                              Driver
+                              <span class="caret">
+                              </span></a>
+
+                                <ul class="dropdown-menu">
+                                                 <li><a href="#/booking"><span  ng-hide="isLoggedIn && nav.userType=='Driver'" >All Bookings</span></a></li>
+                         <li><a href="#/driver"><span  ng-hide="isLoggedIn && nav.userType=='Driver'">Driver Map</span></a></li>
+                                              <li class="divider"></li>
+                                                <li><a href="#/Password"  ng-hide="isLoggedIn && nav.userType=='Driver'">Change Password</a></li>
+                                                <li class="divider"></li>
+
+
+
+                                                    <li>
+                                                       		&nbsp;&nbsp;&nbsp;
+                                                          <a href="#/login"  ng-hide="isLoggedIn && nav.userType=='Driver'" class="btn btn-danger">
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                 <span class="glyphicon glyphicon-blackboard"></span>
+                                 &nbsp;Logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                </li>
+                                            </ul>
+                                          </li>
+
+
+
+
+        <li class="dropdown" ng-hide="isLoggedIn && nav.userType=='Customer'">
+      <a class="dropdown-toggle" ng-hide="isLoggedIn && nav.userType=='Driver'" data-toggle="dropdown" href="#/start">
+    Customer
+      <span class="caret">
+      </span></a>
+
+        <ul class="dropdown-menu">
+
+                        <li><a href="#/Password" ng-hide="isLoggedIn && nav.userType=='Driver'">Change Password</a></li>
+                        <li class="divider"></li>
+
+
+
+                            <li>
+                               		&nbsp;&nbsp;&nbsp;
+                                  <a href="#/login" ng-hide="isLoggedIn && nav.userType=='Driver'" class="btn btn-danger">
+                              &nbsp;&nbsp;&nbsp;&nbsp;
+
+         <span class="glyphicon glyphicon-blackboard"></span>
+         &nbsp;Logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </li>
+
+                    </ul>
+                  </li>
+
+
+
+
+
+
+
+
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          <li ng-hide="isLoggedIn"><a href="#/login">Login</a></li>
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+<div ng-view></div>
+<footer id="footer">
+  <br><br><br>
+  <div class="container-fluid">
+    <p>Copyright © Cabby.com  | Welcome To Book Cabs
+     </p>
+  </div>
+  </footer>
+  	</div>
+  </div>
+  </body>
+  </html>
